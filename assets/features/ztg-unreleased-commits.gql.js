@@ -1,0 +1,3 @@
+var getPublishRepoState = "query GetPublishRepoState($owner: String!, $name: String!) {\n\trepository(owner: $owner, name: $name) {\n\t\trefs(\n\t\t\tfirst: 20\n\t\t\trefPrefix: \"refs/tags/\"\n\t\t\torderBy: { field: TAG_COMMIT_DATE, direction: DESC }\n\t\t) {\n\t\t\tnodes {\n\t\t\t\tname\n\t\t\t\ttag: target {\n\t\t\t\t\toid\n\t\t\t\t\t... on Tag {\n\t\t\t\t\t\tcommit: target {\n\t\t\t\t\t\t\toid\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\tdefaultBranchRef {\n\t\t\ttarget {\n\t\t\t\t... on Commit {\n\t\t\t\t\thistory(first: 20) {\n\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\toid\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n";
+
+export { getPublishRepoState as default };

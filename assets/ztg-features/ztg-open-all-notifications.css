@@ -1,0 +1,17 @@
+.js-notifications-mark-selected-actions[hidden] ~ .rgh-open-notifications-button {
+  display: inline-block !important;
+}
+
+.dropdown + .rgh-open-selected-button {
+  margin-left: 8px;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

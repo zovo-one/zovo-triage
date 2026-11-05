@@ -1,0 +1,28 @@
+.rgh-release-download-count {
+  max-width: 100%;
+}
+
+.rgh-release-download-count > span:not(:last-child, [data-view-component]) {
+  min-width: 5em;
+  flex-basis: 0 !important;
+}
+
+.rgh-release-download-count > span:last-child {
+  text-overflow: ellipsis;
+  width: 7em;
+  overflow: hidden;
+}
+
+.rgh-release-download-count [data-rgh-heat] {
+  min-width: 5em;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

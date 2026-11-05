@@ -1,0 +1,59 @@
+import { $$optional, $ } from '../npm/ztg-select-dom.js';
+
+const absoluteReferenceRegex = /^(?<nameWithOwner>(?<owner>[^/:]+)\/(?<name>[^:]+)):(?<branch>.+)$/;
+
+/**
+Extract branch info from the UI
+@param absolute - The full reference, e.g. `fregante/mem:main`
+@param relative - The references it appear to the user in the PR, e.g. "main" on same-repo PRs, "fregante:main" on cross-repo PRs
+@example parseReferenceRaw('fregante/mem:main', 'main')
+*/
+function parseReferenceRaw(absolute, relative) {
+	const absoluteMatch = absoluteReferenceRegex.exec(absolute);
+	if (!absoluteMatch) {
+		throw new TypeError(`Expected \`absolute\` to be "user/repo:branch", got "${absolute}"`);
+	}
+
+	const {owner, name, nameWithOwner, branch} = absoluteMatch.groups;
+
+	// We must receive the relative reference because it also tells whether it's a cross-repo PR
+	const expectedRelative = [branch, `${owner}:${branch}`];
+	if (!expectedRelative.includes(relative)) {
+		throw new TypeError(`Expected \`relative\` to be either "${expectedRelative.join('" or "')}", got "${relative}"`);
+	}
+
+	return {
+		owner,
+		name,
+		branch,
+		nameWithOwner,
+		absolute,
+		relative,
+	};
+}
+
+function parseReference(referenceElement) {
+	const {textContent, nextElementSibling} = referenceElement;
+	return parseReferenceRaw(nextElementSibling.textContent.trim(), textContent.trim());
+}
+
+function getBranches() {
+	return {
+		get base() {
+			return parseReference($([
+				'[class*="PullRequestHeaderSummary"] a[class^="PullRequestBranchName"]',
+				'.base-ref', // TODO [2027-01-01]: Drop after legacy PR files view is removed
+			]));
+		},
+		get head() {
+			return parseReference(
+				// Doesn't exist in old views
+				$$optional('[class*="PullRequestHeaderSummary"] a[class^="PullRequestBranchName"]')?.[1]
+					// TODO [2027-01-01]: Drop after legacy PR files view is removed
+					?? $('.head-ref'),
+			);
+		},
+	};
+}
+
+export { getBranches, parseReferenceRaw };

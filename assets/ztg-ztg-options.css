@@ -1,0 +1,334 @@
+/*! https://npm.im/webext-base-css */
+
+:root {
+	color-scheme: light dark;
+	max-width: 700px;
+	margin: auto;
+	background: var(--background-color);
+}
+
+body {
+	/* Must be on body because both browsers have `font-size: 75%` here */
+	font: 16px/1.5 system-ui, sans-serif;
+}
+
+select,
+textarea,
+input:where(
+	[type='number'],
+	[type='password'],
+	[type='search'],
+	[type='text'],
+	[type='url'],
+	:not([type])
+) {
+	box-sizing: border-box;
+	font: inherit;
+	line-height: 2;
+}
+
+textarea,
+input:where(
+	[type='number'],
+	[type='password'],
+	[type='search'],
+	[type='text'],
+	[type='url'],
+	:not([type])
+):not([size]) {
+	width: 100%;
+}
+
+textarea {
+	line-height: 1.5; /* Reset it because 2 is too big */
+	resize: vertical;
+	min-height: 3lh;
+	/* stylelint-disable-next-line property-no-unknown */
+	field-sizing: content;
+}
+
+input[type='submit'],
+button {
+	font: inherit;
+}
+
+hr {
+	border: none;
+	border-bottom: 1px solid currentcolor;
+	opacity: 50%;
+}
+
+img {
+	vertical-align: middle;
+}
+
+kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font-size: 0.8em;
+	line-height: 10px;
+	color: #444d56;
+	vertical-align: middle;
+	background-color: #fafbfc;
+	border: 1px solid #d1d5da;
+	border-radius: 6px;
+	box-shadow: inset 0 -1px 0 #d1d5da;
+}
+
+/* Firefox-only style */
+/* stylelint-disable-next-line at-rule-no-vendor-prefix */
+@-moz-document url-prefix('') {
+	@media (prefers-color-scheme: dark) {
+		:root {
+			--background-color: #23222b;
+		}
+	}
+}
+
+/* iOS/iPadOS-specific style */
+@supports (-webkit-text-size-adjust: none) {
+	@media (prefers-color-scheme: dark) {
+		:root {
+			/* Safari iOS has a black background */
+			--background-color: #1e1e1e;
+		}
+	}
+}
+
+.text-monospace,
+.monospace-field {
+	/* Same as GitHub style for `code` */
+	font-family:
+		ui-monospace,
+		SFMono-Regular,
+		'SF Mono',
+		Menlo,
+		Consolas,
+		'Liberation Mono',
+		monospace !important;
+}
+
+:root.webext-base-css-modal {
+	background: light-dark(#6e9d9f, #194041);
+	min-height: 100vh;
+	display: grid;
+	place-items: center;
+
+	body {
+		max-width: 500px;
+		border-radius: 8px;
+		padding: 8px;
+		background: var(--background-color, light-dark(#fff, #1e1e1e));
+		box-shadow:
+			0.3px 2.8px 2.2px rgb(0 0 0 / 2%),
+			0.8px 6.7px 5.3px rgb(0 0 0 / 2.8%),
+			1.5px 12.5px 10px rgb(0 0 0 / 3.5%),
+			2.7px 22.3px 17.9px rgb(0 0 0 / 4.2%),
+			5px 41.8px 33.4px rgb(0 0 0 / 5%),
+			12px 100px 80px rgb(0 0 0 / 7%);
+	}
+
+	body > :first-child {
+		margin-top: 0;
+	}
+
+	body > :last-child {
+		margin-bottom: 0;
+	}
+
+	hr {
+		margin-inline: -8px;
+	}
+}
+
+:root {
+  --rgh-red: #cf222e;
+  --content-width: 750px;
+  --viewport-margin: 30px;
+  --ztg-primary: #6547e8;
+  --ztg-primary-tint: #f1effd;
+  --ztg-text: #18172b;
+  --ztg-muted: #686779;
+  --ztg-surface: #f7f7fa;
+  --ztg-card: #fff;
+  --ztg-border: #e2e1e9;
+  --ztg-shadow: 0 12px 32px #1e1a451a;
+  background: var(--ztg-surface);
+  max-width: none;
+  color: var(--ztg-text);
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif;
+}
+
+body {
+  background: var(--ztg-surface);
+  min-height: 100vh;
+  margin: 0;
+}
+
+form {
+  max-width: var(--content-width);
+  padding: 24px var(--viewport-margin) 48px;
+  margin: auto;
+}
+
+html:after {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --rgh-red: #f85149;
+    --ztg-primary: #8b72ff;
+    --ztg-primary-tint: #28213f;
+    --ztg-text: #f4f2ff;
+    --ztg-muted: #aaa7bc;
+    --ztg-surface: #0f0e19;
+    --ztg-card: #1a1828;
+    --ztg-border: #343146;
+    --ztg-shadow: 0 12px 32px #00000047;
+  }
+}
+
+a {
+  color: var(--ztg-primary);
+}
+
+button, input, textarea, select {
+  border: 1px solid var(--ztg-border);
+  background: var(--ztg-card);
+  min-height: 40px;
+  color: var(--ztg-text);
+  font: inherit;
+  border-radius: 8px;
+}
+
+button {
+  cursor: pointer;
+  padding: 8px 14px;
+  font-weight: 700;
+}
+
+button:hover {
+  border-color: var(--ztg-primary);
+  background: var(--ztg-primary-tint);
+}
+
+input, textarea, select {
+  padding: 8px 10px;
+}
+
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, summary:focus-visible, a:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--ztg-primary) 30%, transparent);
+  outline-offset: 2px;
+}
+
+p, ul {
+  margin-top: 0;
+}
+
+p:last-child:not(.info p, background-status p), ul:last-child {
+  margin-bottom: 0;
+}
+
+ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+storage-usage {
+  font-style: italic;
+}
+
+details {
+  --border-radius: 12px;
+  border: solid 1px var(--ztg-border);
+  border-radius: var(--border-radius);
+  background: var(--ztg-card);
+  margin-bottom: 12px;
+}
+
+@media (width <= 750px) {
+  details {
+    border-width: 0;
+  }
+}
+
+details[open] {
+  border-color: color-mix(in srgb, var(--ztg-primary) 22%, var(--ztg-border));
+}
+
+details:first-of-type[open] {
+  box-shadow: var(--ztg-shadow);
+}
+
+details[open]::details-content {
+  padding: 20px;
+}
+
+summary {
+  --summary-padding: 14px 16px;
+  z-index: 1;
+  background: var(--ztg-card);
+  padding: var(--summary-padding);
+  list-style: none;
+  position: sticky;
+  top: 0;
+}
+
+[open] :is(summary) {
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary:hover {
+  background: var(--ztg-primary-tint);
+}
+
+summary strong {
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.text-code {
+  font-size: 11px;
+}
+
+.text-italics {
+  font-style: italic;
+}
+
+.error-banner {
+  border: 1px solid var(--rgh-red);
+  background: color-mix(in srgb, var(--rgh-red) 10%, transparent);
+  padding: 1em;
+}
+
+#js-failed {
+  white-space: pre-line;
+  box-sizing: border-box;
+  max-width: var(--content-width);
+  margin: var(--viewport-margin) auto;
+  animation: 0s 1s both show;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+    display: none;
+  }
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

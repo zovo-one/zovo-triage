@@ -1,0 +1,3 @@
+var GetPullRequestBlameCommit = "query GetPullRequestBlameCommit(\n\t$owner: String!\n\t$name: String!\n\t$file: String!\n\t$commit: String!\n) {\n\trepository(owner: $owner, name: $name) {\n\t\tfile: object(expression: $file) {\n\t\t\tid\n\t\t}\n\t\tobject(expression: $commit) {\n\t\t\t... on Commit {\n\t\t\t\tassociatedPullRequests(last: 1) {\n\t\t\t\t\tnodes {\n\t\t\t\t\t\tnumber\n\t\t\t\t\t\tmergeCommit {\n\t\t\t\t\t\t\toid\n\t\t\t\t\t\t}\n\t\t\t\t\t\tcommits(last: 1) {\n\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\tcommit {\n\t\t\t\t\t\t\t\t\toid\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n";
+
+export { GetPullRequestBlameCommit as default };

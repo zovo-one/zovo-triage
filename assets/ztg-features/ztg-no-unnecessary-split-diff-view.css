@@ -1,0 +1,59 @@
+html:not([rgh-OFF-no-unnecessary-split-diff-view]) .js-diff-table:has([data-split-side]):not(:has([data-split-side="left"]:is(.blob-code-addition, .blob-code-deletion))) {
+  --rgh-only-additions: none;
+  table-layout: auto !important;
+}
+
+html:not([rgh-OFF-no-unnecessary-split-diff-view]) .js-diff-table:has([data-split-side]):not(:has([data-split-side="right"]:is(.blob-code-addition, .blob-code-deletion))) {
+  --rgh-only-deletions: none;
+  table-layout: auto !important;
+}
+
+:is(html:not([rgh-OFF-no-unnecessary-split-diff-view]) [data-hunk], html:not([rgh-OFF-no-unnecessary-split-diff-view]) .blob-expanded) td:nth-child(2) {
+  display: var(--rgh-only-additions, table-cell) !important;
+}
+
+:is(html:not([rgh-OFF-no-unnecessary-split-diff-view]) [data-hunk], html:not([rgh-OFF-no-unnecessary-split-diff-view]) .blob-expanded) td:nth-child(4) {
+  display: var(--rgh-only-deletions, table-cell) !important;
+}
+
+html:not([rgh-OFF-no-unnecessary-split-diff-view]) :is(.inline-comments, .js-inline-annotations) .empty-cell:not(.blob-num) {
+  display: var(--rgh-only-additions, var(--rgh-only-deletions, table-cell)) !important;
+}
+
+.rgh-no-split-diff {
+  table-layout: auto !important;
+}
+
+.rgh-no-split-diff.rgh-only-additions {
+  --rgh-left-side-d: none;
+  --rgh-right-side-w: 100%;
+}
+
+.rgh-no-split-diff.rgh-only-deletions {
+  --rgh-right-side-d: none;
+  --rgh-left-side-w: 100%;
+}
+
+.rgh-no-split-diff .diff-line-number {
+  min-width: 40px;
+}
+
+.rgh-no-split-diff .diff-line-row > td:nth-child(2) {
+  display: var(--rgh-left-side-d, table-cell) !important;
+  width: var(--rgh-left-side-w, auto) !important;
+}
+
+.rgh-no-split-diff .diff-line-row > td:nth-child(4) {
+  display: var(--rgh-right-side-d, table-cell) !important;
+  width: var(--rgh-right-side-w, auto) !important;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

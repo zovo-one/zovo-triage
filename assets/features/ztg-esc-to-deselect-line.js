@@ -1,0 +1,59 @@
+import { hasCode } from '../npm/ztg-github-url-detection.js';
+import { $optional } from '../npm/ztg-select-dom.js';
+import features from '../ztg-feature-manager.js';
+import { isEditable } from '../helpers/ztg-dom-utils.js';
+import removeHashFromUrlBar from '../helpers/ztg-history.js';
+
+function isLineSelected() {
+	// Example hashes:
+	// #L1
+	// #L1-L7
+	// #diff-1030ad175a393516333e18ea51c415caR1
+	return /^#L|^#diff-[\da-f]+R\d+/.test(location.hash);
+}
+
+function listener({key, target}) {
+	if (key !== 'Escape' || !isLineSelected() || isEditable(target)) {
+		return;
+	}
+
+	const selectedLineNumber = $optional('.react-line-number.highlighted-line');
+
+	if (selectedLineNumber) {
+		// Save and remove line number
+		const {lineNumber} = selectedLineNumber.dataset;
+		selectedLineNumber.dataset.lineNumber = '';
+		// Trigger click to deselect
+		selectedLineNumber.dispatchEvent(new MouseEvent('mousedown', {bubbles: true}));
+		// Restore line number
+		selectedLineNumber.dataset.lineNumber = lineNumber;
+		// Un-focus code block
+		(document.activeElement ).blur();
+	} else {
+		// TODO [2027-01-01]: Review if old UI is gone. Currently only applies to PRs
+		location.hash = '#no-line'; // Update UI, without `scroll-to-top` behavior
+	}
+
+	removeHashFromUrlBar();
+}
+
+function init(signal) {
+	document.body.addEventListener('keyup', listener, {signal});
+}
+
+void features.add(import.meta.url, {
+	include: [
+		hasCode,
+	],
+	init,
+});
+
+/*
+
+Test URLs:
+
+1. Visit https://github.com/refined-github/refined-github/blob/132272786fdc058193e089d8c06f2a158844e101/source/features/esc-to-deselect-line.tsx#L11
+2. Press Esc
+3. See selected line become deselected
+
+*/

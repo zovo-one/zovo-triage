@@ -1,0 +1,55 @@
+:root {
+  --rgh-table-input-size: 40px;
+}
+
+:root:root:root:root .rgh-table-input {
+  font-size: var(--rgh-table-input-size);
+  z-index: 99;
+  grid-template: repeat(5, 1em) / repeat(5, 1em);
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  padding: 3px;
+  display: grid !important;
+}
+
+.ActionBar-item-container:has(.rgh-table-input), [class*="ActionBar-Nav"]:has(.rgh-table-input) {
+  overflow: visible;
+}
+
+:root .rgh-tic {
+  padding: 1px;
+  display: grid;
+}
+
+.rgh-tic:before {
+  content: "";
+  border: 2px solid var(--rgh-border-color, fuchsia);
+  border-radius: 2px;
+  align-self: stretch;
+}
+
+@media screen and (width >= 768px) {
+  :root {
+    --rgh-table-input-size: 20px;
+  }
+}
+
+.rgh-tic:hover:before, .rgh-tic:nth-of-type(5n+1):has( ~ .rgh-tic:hover:nth-of-type(5n+1)):before, .rgh-tic:is(:nth-of-type(5n+1), :nth-of-type(5n+2)):has( ~ .rgh-tic:hover:nth-of-type(5n+2)):before, .rgh-tic:not(:nth-of-type(5n+4), :nth-of-type(5n+5)):has( ~ .rgh-tic:hover:nth-of-type(5n+3)):before, .rgh-tic:not(:nth-of-type(5n+5)):has( ~ .rgh-tic:hover:nth-of-type(5n+4)):before, .rgh-tic:has( ~ .rgh-tic:hover:nth-of-type(5n+5)):before {
+  border-color: var(--borderColor-accent-muted, fuchsia);
+  background-color: var(--bgColor-accent-muted, fuchsia);
+}
+
+.rgh-table-input .sentinel {
+  display: none;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

@@ -1,0 +1,21 @@
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}
+
+.rgh-merge-commit > div > * {
+  transition: opacity .1s;
+}
+
+.rgh-merge-commit:not(.navigation-focus, :hover) > div > * {
+  opacity: .5;
+}
+
+.rgh-merge-commit.TimelineItem--condensed .octicon-git-merge {
+  margin-left: .5rem;
+}

@@ -1,0 +1,100 @@
+import React from '../npm/ztg-dom-chef.js';
+import { isPRList, hasComments, isRepo } from '../npm/ztg-github-url-detection.js';
+import { closestElementOptional, $optional, $ } from '../npm/ztg-select-dom.js';
+import features from '../ztg-feature-manager.js';
+import getCommentAuthor from '../github-helpers/ztg-get-comment-author.js';
+import { buildRepoUrl } from '../github-helpers/ztg-index.js';
+import { is } from '../helpers/ztg-css-selectors.js';
+import { wrap } from '../helpers/ztg-dom-utils.js';
+import observe from '../helpers/ztg-selector-observer.js';
+
+function getAuthor(label) {
+	const prMetadataRow = closestElementOptional('.opened-by', label);
+	if (!prMetadataRow) {
+		return getCommentAuthor(label);
+	}
+
+	const userPrsLink = $('a[data-hovercard-type="user"]', prMetadataRow);
+	// The link always ends with author
+	const username = userPrsLink.href.split('author%3A', 2)[1];
+	return username;
+}
+
+function linkify(label) {
+	if (closestElementOptional('a', label)) {
+		throw new Error('Already linkified, feature needs to be updated');
+	}
+
+	// React might create a new label without removing the old one
+	// https://github.com/refined-github/refined-github/issues/8478
+	$optional('.rgh-linkify-user-labels', label.parentElement)?.remove();
+
+	const url = new URL(buildRepoUrl('commits'));
+	url.searchParams.set('author', getAuthor(label));
+	wrap(label, React.createElement('a', { className: "Link--onHover no-underline color-fg-inherit rgh-linkify-user-labels"   , href: url.href,} ));
+}
+
+const ariaLabelSelector = is(
+	'[aria-label^="This user is a member"]',
+	'[aria-label^="This user has previously committed"]',
+	'[aria-label^="This user has been invited to collaborate"]',
+);
+
+function init(signal) {
+	observe(
+		[
+			'span[data-testid="comment-author-association"]' + ariaLabelSelector,
+			// PRs
+			'.tooltipped' + ariaLabelSelector,
+		],
+		linkify,
+		{signal},
+	);
+}
+
+void features.add(import.meta.url, {
+	asLongAs: [
+		isRepo,
+	],
+	include: [
+		isPRList,
+		hasComments,
+	],
+	init,
+});
+
+/*
+
+Test URLs:
+
+Bot PR
+https://github.com/webpack/webpack/pull/15926#issue-1264092372
+
+Bot comment
+https://github.com/webpack/webpack/pull/15926#issuecomment-1149371743
+
+Bot commented on behalf of
+https://github.com/webpack/webpack/pull/15926#issuecomment-1170670173
+
+Member review
+https://github.com/refined-github/refined-github/pull/5721#pullrequestreview-1018226910
+
+Contributor review comment
+https://github.com/refined-github/refined-github/pull/5691#discussion_r895191327
+
+Contributor review second comment
+https://github.com/refined-github/refined-github/pull/5691#discussion_r895192800
+
+Contributor review second comment in Files tab
+https://github.com/refined-github/refined-github/pull/2667/files#r366433031
+
+Member comment on issue
+https://github.com/refined-github/sandbox/issues/74#issuecomment-2143792189
+
+Collaborator review comment
+https://github.com/editorconfig/editorconfig-emacs/pull/389/changes#r2809824690
+
+Pull requests from a contributor
+https://github.com/refined-github/refined-github/pulls?q=is%3Apr+author%3Anotlmn
+
+*/

@@ -1,0 +1,13 @@
+.flex-items-center a[aria-label="go to Overview"], .flex-items-center a[aria-label="go to default branch"], [class^="CodeViewError"] .Blankslate-Action > a:only-child {
+  display: none;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

@@ -1,0 +1,26 @@
+nav.rgh-extensible-nav.d-none {
+  display: flex !important;
+}
+
+.rgh-extensible-nav-removed {
+  opacity: .0001;
+  pointer-events: none;
+  width: 1px;
+  position: absolute;
+  top: -200px;
+  left: -2000px;
+}
+
+.rgh-extensible-nav-removed > ul {
+  width: 2000px;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

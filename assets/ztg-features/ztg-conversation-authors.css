@@ -1,0 +1,30 @@
+.rgh-collaborator {
+  border: 1px solid
+		var(--borderColor-default, var(--color-border-default, fuchsia));
+  border-radius: 2em;
+  padding: 2px 5px;
+}
+
+.rgh-collaborator .rgh-small-user-avatars {
+  margin-left: -3px;
+  margin-right: 4px !important;
+}
+
+a.rgh-own-conversation, a.rgh-own-conversation:hover {
+  background-color: var(--bgColor-attention-muted, var(--color-attention-subtle, fuchsia));
+  color: var(--color-user-mention-fg, fuchsia) !important;
+}
+
+a.rgh-own-conversation:hover {
+  text-decoration: underline !important;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

@@ -1,0 +1,21 @@
+html:not([rgh-OFF-clean-conversation-sidebar]) div[class^="IssueSidebar-module__sidebarContent"] div[class^="Section-module__SectionContainer"]:has(span[class*="emptyText" i], [class*="developmentHelpText"]):not(:has(.octicon-gear)), html:not([rgh-OFF-clean-conversation-sidebar]) div[class^="IssueSidebar-module__sidebarContent"] div[class^="Section-module__SectionContainer"] span:is([class*="emptyText" i], [class*="developmentHelpText"]):not(:has( > button)) {
+  display: none;
+}
+
+.discussion-sidebar-item.rgh-clean-sidebar {
+  margin-bottom: -5px;
+}
+
+.rgh-clean-sidebar .discussion-sidebar-item:first-child {
+  padding-top: 0 !important;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

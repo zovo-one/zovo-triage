@@ -1,0 +1,20 @@
+@media (hover: hover) and (pointer: fine) {
+  html:not([rgh-OFF-clean-rich-text-editor]) button:is([data-md-button="mention"], [data-md-button="ref"], [data-md-button="header-3"], [data-md-button="bold"], [data-md-button="italic"], [data-component="IconButton"]:has( > .octicon-heading,  > .octicon-bold,  > .octicon-italic,  > .octicon-cross-reference,  > .octicon-mention)):not(:focus) {
+    clip-path: inset(50%);
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    position: absolute;
+    overflow: hidden;
+  }
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

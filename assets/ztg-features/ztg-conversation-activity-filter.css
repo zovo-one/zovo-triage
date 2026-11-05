@@ -1,0 +1,17 @@
+[data-rgh-conversation-activity-filter="hideEvents"] .rgh-conversation-activity-filtered-event {
+  display: none;
+}
+
+[data-rgh-conversation-activity-filter="hideAllNoise"] .rgh-conversation-activity-filtered-event, [data-rgh-conversation-activity-filter="hideAllNoise"] .rgh-conversation-activity-bot-comment, [data-rgh-conversation-activity-filter="hideAllNoise"] .rgh-conversation-activity-collapsed-comment, [data-rgh-conversation-activity-filter="hideAllNoise"] .js-resolvable-timeline-thread-container[data-resolved="true"], [data-rgh-conversation-activity-filter="hideAllNoise"] .minimized-comment {
+  display: none !important;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

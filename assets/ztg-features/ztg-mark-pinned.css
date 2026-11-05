@@ -1,0 +1,22 @@
+.rgh-pinned-issue-icon {
+  position: relative;
+}
+
+.rgh-pinned-issue-icon:before {
+  content: "";
+  opacity: .2;
+  background: currentColor;
+  border-radius: 50%;
+  position: absolute;
+  inset: -30%;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

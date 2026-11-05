@@ -1,0 +1,24 @@
+@media (width >= 500px) {
+  html:not([rgh-OFF-repo-header-info]) .GlobalNav nav[data-component="Breadcrumbs"] ol:not(.rgh-repo-header-info-updated) li:last-child {
+    padding-right: 6em;
+  }
+}
+
+html:not([rgh-OFF-repo-header-info]) .rgh-repo-header-info-updated li:not(.rgh-header-info) + li span[class*="Breadcrumbs-ItemSeparator"], html:not([rgh-OFF-repo-header-info]) .rgh-repo-header-info-updated li:not(.rgh-header-info) + li:after {
+  content: none;
+  display: none;
+}
+
+html:not([rgh-OFF-repo-header-info]) .rgh-ci-link .commit-build-statuses {
+  font-size: 0;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

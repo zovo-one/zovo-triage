@@ -1,0 +1,42 @@
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}
+
+:root .rgh-pr-box {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  display: flex;
+}
+
+.rgh-pr-cell {
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.rgh-pr-cell > [class*="Box"] {
+  height: auto;
+}
+
+.rgh-pr-link {
+  color: var(--fgColor-muted, var(--color-fg-muted, fuchsia));
+  border: solid 1px
+		var(--borderColor-default, var(--color-border-default, fuchsia));
+  white-space: nowrap;
+  border-radius: 999px;
+  align-items: center;
+  height: 20px;
+  padding: 0 7px;
+  display: inline-flex;
+  text-decoration: none !important;
+}
+
+.rgh-pr-link:hover {
+  background-color: var(--bgColor-muted, var(--color-canvas-subtle, fuchsia));
+}

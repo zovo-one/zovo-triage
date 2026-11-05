@@ -1,0 +1,161 @@
+import React from '../npm/ztg-dom-chef.js';
+import { isConversation, isPR } from '../npm/ztg-github-url-detection.js';
+import { $, closestElement, $optional, elementExists } from '../npm/ztg-select-dom.js';
+import features from '../ztg-feature-manager.js';
+import { removeTextNodeContaining } from '../helpers/ztg-dom-utils.js';
+import onElementRemoval from '../helpers/ztg-on-element-removal.js';
+import observe from '../helpers/ztg-selector-observer.js';
+
+// Don't cache: https://github.com/refined-github/refined-github/issues/7283
+const canEditSidebar = () => elementExists('.discussion-sidebar-item [data-hotkey="l"]');
+
+function getNodesAfter(node) {
+	const range = new Range();
+	range.selectNodeContents(node.parentElement);
+	range.setStartAfter(node);
+	return range;
+}
+
+async function cleanReviewers() {
+	const possibleReviewers = $optional('[src$="/suggested-reviewers"]');
+	if (possibleReviewers) {
+		await onElementRemoval(possibleReviewers);
+	}
+
+	const content = $('[aria-label="Select reviewers"] > .css-truncate');
+	if (!content.firstElementChild) {
+		removeTextNodeContaining(content, 'No reviews');
+	}
+}
+
+/**
+Smartly removes "No content" or the whole section, depending on `canEditSidebar`.
+
+Expected DOM:
+
+```pug
+.discussion-sidebar-item
+	form (may be missing)
+		details or div.discussion-sidebar-heading
+		.css-truncate (may be missing)
+			"No issues"
+```
+
+@param selector Element that contains `details` or `.discussion-sidebar-heading` or distinctive element inside it
+*/
+function cleanSection(selector) {
+	const container = $optional(`:is(form, .discussion-sidebar-item):has(${selector})`);
+	if (!container) {
+		return false;
+	}
+
+	const identifiers = [
+		'.IssueLabel',
+		'[aria-label="Select milestones"] .Progress-item',
+		'[aria-label="Link issues"] [data-hovercard-type]',
+		'a[href^="https://copilot-workspace.githubnext.com"]',
+		'[aria-label="Select projects"] .Link--primary',
+	];
+
+	const heading = $([
+		'details:has(> .discussion-sidebar-heading)', // Can edit sidebar, has a dropdown
+		'.discussion-sidebar-heading', // Cannot editor sidebar, has a plain heading
+	], container);
+	if (closestElement(['form', '.discussion-sidebar-item'], heading).querySelector(identifiers)) {
+		return false;
+	}
+
+	const section = closestElement('.discussion-sidebar-item', container);
+	if (canEditSidebar()) {
+		getNodesAfter(heading).deleteContents();
+		section.classList.add('rgh-clean-sidebar');
+	} else {
+		section.remove();
+	}
+
+	return true;
+}
+
+async function cleanSidebarLegacy(sidebar) {
+	sidebar.classList.add('rgh-clean-sidebar');
+
+	// Assignees
+	const assignees = $('.js-issue-assignees');
+	if (assignees.children.length === 0) {
+		closestElement('.discussion-sidebar-item', assignees).remove();
+	} else {
+		const assignYourself = $optional('.js-issue-assign-self');
+		if (assignYourself) {
+			removeTextNodeContaining(assignYourself.previousSibling, 'No one—');
+			$('[aria-label="Select assignees"] summary').append(
+				React.createElement('span', { style: {fontWeight: 'normal'},}, " – "  , assignYourself),
+			);
+			closestElement('.discussion-sidebar-item', assignees).classList.add('rgh-clean-sidebar');
+		}
+	}
+
+	// Reviewers
+	if (isPR()) {
+		void cleanReviewers();
+	}
+
+	// Labels
+	if (!cleanSection('.js-issue-labels') && !canEditSidebar()) {
+		// Hide heading in any case except `canEditSidebar`
+		$('.discussion-sidebar-item:has(.js-issue-labels) .discussion-sidebar-heading')
+			.remove();
+	}
+
+	// Development (linked issues/PRs)
+	const developmentHint = $optional('[aria-label="Link issues"] > p');
+	if (developmentHint) { // This may not exist if issues are disabled
+		removeTextNodeContaining(developmentHint, /No branches or pull requests|Successfully merging/);
+	}
+
+	const branchCreationButton = $optional('button[data-action="click:create-branch#openDialog"]');
+	const openWorkspaceButton = $optional('a[href^="https://copilot-workspace.githubnext.com"]');
+	if (branchCreationButton && !openWorkspaceButton) {
+		branchCreationButton.classList.add('Link--muted', 'Link--inTextBlock');
+		$('[aria-label="Link issues"] summary').append(
+			React.createElement('span', { style: {fontWeight: 'normal'},}, " – "  , branchCreationButton),
+		);
+	}
+
+	cleanSection('[aria-label="Link issues"]');
+
+	// Projects
+	cleanSection('[aria-label="Select projects"]');
+
+	// Milestones
+	cleanSection('[aria-label="Select milestones"]');
+}
+
+function init(signal) {
+	observe('#partial-discussion-sidebar', cleanSidebarLegacy, {signal});
+}
+
+void features.add(import.meta.url, {
+	include: [
+		isConversation,
+	],
+	awaitDomReady: true, // The sidebar is at the end of the page + it needs to be fully loaded
+	init,
+});
+
+void features.addCssFeature(import.meta.url);
+
+/*
+
+Test URLs:
+
+* open issue: https://github.com/refined-github/sandbox/issues/15
+* open issue with linked PR: https://github.com/refined-github/sandbox/issues/3
+* closed issue: https://github.com/refined-github/sandbox/issues/56
+* draft PR: https://github.com/refined-github/sandbox/pull/7
+* merged PR: https://github.com/refined-github/sandbox/pull/58
+* open issue with a milestone and assignee: https://github.com/microsoft/TypeScript/issues/18836
+* User has triage access
+  * issue: https://github.com/download-directory/download-directory.github.io/issues/39
+  * PR: https://github.com/download-directory/download-directory.github.io/pull/37
+
+*/

@@ -1,0 +1,92 @@
+import React from '../npm/ztg-dom-chef.js';
+import elementReady from '../npm/ztg-element-ready.js';
+import { isMergedPR, isPRConversation } from '../npm/ztg-github-url-detection.js';
+import InfoIcon from '../npm/ztg-octicons-plain-react-components-Info.js';
+import features from '../ztg-feature-manager.js';
+import waitForPrMerge from '../github-events/ztg-on-pr-merge.js';
+import api from '../github-helpers/ztg-api.js';
+import { userCanLikelyMergePr } from '../github-helpers/ztg-index.js';
+import { getBranches } from '../github-helpers/ztg-pr-branches.js';
+import matchesAnyPattern from '../helpers/ztg-matches-any-patterns.js';
+import GetPrsToBaseBranchAndDeleteOnMerge from './ztg-pr-branch-auto-delete.gql.js';
+
+// DO NOT ask for additions or customizations. This is just a list of "obvious" permanent branches.
+// Protect your permanent branches instead: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches
+const exceptions = [
+	'dev',
+	'develop',
+	'development',
+	'main',
+	'master',
+	'next',
+	'pre',
+	'prod',
+	'stage',
+	'staging',
+	/production/,
+	/^release/,
+	/^v\d/,
+];
+
+async function init(signal) {
+	// Skip branches that are likely to be long-lived https://github.com/refined-github/refined-github/issues/7755
+	const {head} = getBranches();
+	if (matchesAnyPattern(head.branch, exceptions)) {
+		return;
+	}
+
+	// Skip branches that have PRs open https://github.com/refined-github/refined-github/issues/7782
+	const {repository} = await api.v4(GetPrsToBaseBranchAndDeleteOnMerge, {
+		variables: {
+			baseRefName: head.branch,
+		},
+	});
+	if (repository.pullRequests.totalCount > 0 || repository.deleteBranchOnMerge) {
+		return;
+	}
+
+	await waitForPrMerge(signal);
+
+	const branchDeletionButton = await elementReady('div[class^="MergeBoxSectionHeader-module__contentLayout"] button', {
+		predicate: button => button.textContent.trim() === 'Delete branch',
+		stopOnDomReady: false,
+		signal,
+	});
+	branchDeletionButton.click();
+
+	const deletionEvent = await elementReady('.TimelineItem-body:has(.pull-request-ref-restore-text)', {
+		stopOnDomReady: false,
+		signal,
+	});
+	const url
+		= 'https://github.com/refined-github/refined-github/wiki/Extended-feature-descriptions#pr-branch-auto-delete';
+	deletionEvent.append(
+		React.createElement('a', { className: "d-inline-block", href: url,}, "via Refined GitHub "
+   , React.createElement(InfoIcon, null )
+),
+	);
+}
+
+void features.add(import.meta.url, {
+	asLongAs: [
+		userCanLikelyMergePr,
+	],
+	include: [
+		isPRConversation,
+	],
+	exclude: [
+		isMergedPR,
+	],
+	awaitDomReady: true, // Post-load user event, no need to listen earlier
+	init,
+});
+
+/*
+
+Test URLs:
+
+1. Open https://github.com/pulls
+2. Click on any PRs you can merge (in repositories without native auto-delete)
+3. Merge the PR
+
+*/

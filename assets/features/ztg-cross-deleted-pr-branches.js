@@ -1,0 +1,57 @@
+import { isPRConversation } from '../npm/ztg-github-url-detection.js';
+import { $$, lastElementOptional, closestElement } from '../npm/ztg-select-dom.js';
+import features from '../ztg-feature-manager.js';
+
+function markDeletedBranch(element) {
+	element.title = 'This branch has been deleted';
+	element.classList.add('rgh-deleted-branch');
+}
+
+function wasBranchDeleted() {
+	const lastBranchEvent = lastElementOptional('.TimelineItem-body .user-select-contain.commit-ref');
+	return Boolean(lastBranchEvent) // No branch events at all
+		&& closestElement('.TimelineItem-body', lastBranchEvent).textContent.includes(' deleted ');
+}
+
+function parseBranchName(element) {
+	return element.textContent.trim().split(':').pop();
+}
+
+function init() {
+	// There's static and sticky headers
+	const [header1, header2] = $$('a:has(~ [aria-label="Copy head branch name to clipboard"])');
+	markDeletedBranch(header1);
+	markDeletedBranch(header2);
+
+	const deletedBranchName = parseBranchName(header1);
+	for (const element of $$('.commit-ref')) {
+		// The selector might also match the base branch in "PR was rebased" events
+		if (parseBranchName(element) === deletedBranchName) {
+			markDeletedBranch(element);
+		}
+	}
+}
+
+void features.add(import.meta.url, {
+	asLongAs: [
+		isPRConversation,
+		wasBranchDeleted,
+	],
+	deduplicate: 'has-rgh-inner',
+	awaitDomReady: true, // Must wait for the last one
+	init,
+});
+
+/*
+
+Test URLs:
+
+- 🔗 never deleted: https://github.com/refined-github/sandbox/pull/148
+- ✏️ deleted: https://github.com/refined-github/sandbox/pull/146
+- ✏️ deleted (from fork): https://github.com/refined-github/sandbox/pull/149
+- 🔗 deleted and restored: https://github.com/refined-github/sandbox/pull/147
+- 🔗 deleted and restored (on fork): https://github.com/refined-github/sandbox/pull/150
+- 🔗 deleted and repo deleted: https://github.com/refined-github/refined-github/pull/3227
+- 🔗 forks that are deleted before deleting the branch are not detectable sometimes
+
+*/

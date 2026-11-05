@@ -1,0 +1,15 @@
+@media (width >= 768px) {
+  .rgh-tag-changes-link .repository-content .my-5 > :first-child > :nth-child(5):not(.rgh-changelog-link) {
+    padding-top: 21px !important;
+  }
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

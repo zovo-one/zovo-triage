@@ -1,0 +1,34 @@
+html:not([rgh-OFF-clean-repo-filelist-actions]) div[class^="OverviewContent"] button[data-variant="primary"] {
+  padding-inline: .5em .4em;
+}
+
+html:not([rgh-OFF-clean-repo-filelist-actions]) div[class^="OverviewContent"] button[data-variant="primary"] span[data-component="leadingVisual"] {
+  margin-right: .2em;
+}
+
+html:not([rgh-OFF-clean-repo-filelist-actions]) div[class^="OverviewContent"] button[data-variant="primary"] span[data-component="leadingVisual"] > .octicon-code {
+  display: inline-block !important;
+}
+
+html:not([rgh-OFF-clean-repo-filelist-actions]) div[class^="OverviewContent"] button[data-variant="primary"] span[data-component="text"] {
+  display: none;
+}
+
+html:not([rgh-OFF-clean-repo-filelist-actions]) div[class^="OverviewContent"] button:has( > .octicon-agent) {
+  display: none;
+}
+
+html:not([rgh-OFF-clean-repo-filelist-actions]) div[class^="OverviewContent"] span[class*="FileResultsList"]:not(:focus-within) {
+  width: 130px;
+  min-width: 130px;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

@@ -1,0 +1,35 @@
+:not(:hover, :focus) + .rgh-quick-mention:not(:hover, :focus) {
+  opacity: .2;
+}
+
+.rgh-quick-mention {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  translate: -50%;
+  padding: 4px 12px !important;
+}
+
+.react-view + .rgh-quick-mention {
+  translate: none;
+  position: static !important;
+}
+
+.react-view + .rgh-quick-mention:after {
+  bottom: unset;
+  transform: none;
+}
+
+.rgh-quick-mention:not(:hover, :focus) {
+  color: inherit;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

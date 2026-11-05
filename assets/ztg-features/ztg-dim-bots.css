@@ -1,0 +1,25 @@
+.rgh-dim-bots > *, .rgh-dim-bots .Box-row--drag-hide {
+  transition: opacity .1s;
+}
+
+.rgh-dim-bots:not(.rgh-tagged, :hover) > *, .rgh-dim-bots:not(.rgh-tagged, :hover) .Box-row--drag-hide {
+  opacity: .5;
+}
+
+.rgh-dim-bots:not(.rgh-tagged, .rgh-interacted) .min-width-0 .mb-1 {
+  margin-bottom: 0 !important;
+}
+
+.rgh-dim-bots:not(.rgh-tagged, .rgh-interacted) .mb-1 ~ *, .rgh-dim-bots:not(.rgh-tagged, .rgh-interacted) .dropdown-signed-commit, .rgh-dim-bots:not(.rgh-tagged, .rgh-interacted) .flex-shrink-0 .BtnGroup, .rgh-dim-bots:not(.rgh-tagged, .rgh-interacted) .min-width-0 > :is(.d-block, .d-flex) {
+  display: none !important;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

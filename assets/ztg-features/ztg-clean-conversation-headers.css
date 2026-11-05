@@ -1,0 +1,54 @@
+:root .rgh-non-default-branch {
+  background-color: var(--control-checked-bgColor-hover, var(--color-state-hover-primary-bg, var(--color-accent-emphasis, fuchsia)));
+}
+
+:root .rgh-non-default-branch, :root .rgh-non-default-branch a {
+  color: var(--control-checked-fgColor-rest, var(--color-state-hover-primary-text, var(--color-fg-on-emphasis, fuchsia)));
+}
+
+.rgh-clean-conversation-headers:not(.rgh-hide-author):before {
+  content: "by ";
+  order: -3;
+}
+
+.rgh-clean-conversation-headers a[data-hovercard-type="user"] {
+  order: -2;
+}
+
+.rgh-clean-conversation-headers relative-time {
+  order: -1;
+}
+
+.rgh-clean-conversation-headers.rgh-hide-author .author, .rgh-clean-conversation-headers.rgh-hide-author a[data-hovercard-type="user"] {
+  display: none;
+}
+
+.rgh-clean-conversation-headers.rgh-sticky-pr-header .rgh-base-branch:not(.rgh-non-default-branch), .rgh-clean-conversation-headers.rgh-sticky-pr-header .rgh-base-branch:not(.rgh-non-default-branch) ~ .rgh-arrow {
+  display: none;
+}
+
+.rgh-clean-conversation-headers .commit-ref-dropdown {
+  margin-top: -2px !important;
+}
+
+@media (width <= 500px) {
+  :is([data-testid="issue-metadata-sticky"], [class*="StickyPullRequestHeader"]) span[class^="prc-StateLabel"], :is([data-testid="issue-metadata-sticky"], [class*="StickyPullRequestHeader"]) .State {
+    border-radius: var(--borderRadius-full, 0);
+    height: 40px;
+    font-size: 0;
+  }
+
+  :is(:is([data-testid="issue-metadata-sticky"], [class*="StickyPullRequestHeader"]) span[class^="prc-StateLabel"], :is([data-testid="issue-metadata-sticky"], [class*="StickyPullRequestHeader"]) .State) svg {
+    margin: 0 !important;
+  }
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

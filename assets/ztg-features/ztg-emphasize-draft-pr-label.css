@@ -1,0 +1,19 @@
+@media (resolution >= 2x) {
+  html:not([rgh-OFF-emphasize-draft-pr-label]) .controlBoxContainer .octicon-git-pull-request-draft, html:not([rgh-OFF-emphasize-draft-pr-label]) .Box-row .octicon-git-pull-request-draft, html:not([rgh-OFF-emphasize-draft-pr-label]) [role="list"] .octicon-git-pull-request-draft, html:not([rgh-OFF-emphasize-draft-pr-label]) .rgh-select-notifications .octicon-git-pull-request-draft, html:not([rgh-OFF-emphasize-draft-pr-label]) .notification-list-item-link .octicon-git-pull-request-draft {
+    stroke: var(--fgColor-muted, var(--color-fg-muted, fuchsia));
+    stroke-width: 1.2px;
+    paint-order: stroke;
+    color: var(--rgh-background, fuchsia) !important;
+    overflow: visible !important;
+  }
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

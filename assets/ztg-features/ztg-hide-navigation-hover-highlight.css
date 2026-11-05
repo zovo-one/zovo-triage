@@ -1,0 +1,18 @@
+[rgh-no-navigation-highlight] .Box-row.navigation-focus, [rgh-no-navigation-highlight] .react-directory-row:hover, [rgh-no-navigation-highlight] .navigation-focus td {
+  background: none !important;
+}
+
+[rgh-no-navigation-highlight] .notifications-list-item:hover {
+  box-shadow: none !important;
+  background: none !important;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

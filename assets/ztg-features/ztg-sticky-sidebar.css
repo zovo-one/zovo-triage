@@ -1,0 +1,32 @@
+.application-main {
+  --rgh-sticky-header-height: 70px;
+  --rgh-sticky-sidebar-offset: calc(var(--rgh-sticky-header-height, 0px) +
+			var(--rgh-sticky-notification-header-height, 0px));
+}
+
+div[class^="prc-PageLayout-Pane"]:has( > rails-partial[data-partial-name="codeViewRepoRoute.Sidebar"]) {
+  --rgh-sticky-sidebar-offset: 0;
+}
+
+.notification-shelf ~ .application-main {
+  --rgh-sticky-notification-header-height: 69px;
+}
+
+.rgh-sticky-sidebar {
+  position: sticky;
+  top: var(--rgh-sticky-sidebar-offset, 0) !important;
+}
+
+.rgh-sticky-sidebar:has(.details-overlay[open]) {
+  z-index: 90;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

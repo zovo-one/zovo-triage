@@ -1,0 +1,33 @@
+.rgh-mention-avatar:before {
+  content: "";
+  background-image: var(--avatar-url);
+  vertical-align: middle;
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+  min-width: 16px;
+  height: 1em;
+  min-height: 16px;
+  margin-right: .2em;
+  display: inline-block;
+  width: 1em !important;
+}
+
+.user-mention {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+[data-testid="list-row-repo-name-and-number"] relative-time {
+  vertical-align: baseline;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

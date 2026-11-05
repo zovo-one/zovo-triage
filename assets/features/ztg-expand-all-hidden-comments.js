@@ -1,0 +1,53 @@
+import delegate from '../npm/ztg-delegate-it-delegate.js';
+import { isConversation } from '../npm/ztg-github-url-detection.js';
+import oneEvent from '../npm/ztg-one-event.js';
+import { $optional } from '../npm/ztg-select-dom.js';
+import features from '../ztg-feature-manager.js';
+import { paginationButtonSelector } from '../github-helpers/ztg-selectors.js';
+import showToast from '../github-helpers/ztg-toast.js';
+
+async function expandHidden(paginationButton) {
+	let wrapper = paginationButton.form.parentElement;
+	const isExpandingMainThread = wrapper.id === 'js-progressive-timeline-item-container';
+
+	while (paginationButton) {
+		// eslint-disable-next-line no-await-in-loop
+		await oneEvent(paginationButton.form, 'page:loaded');
+		if (isExpandingMainThread) {
+			// Pagination forms in the main thread load their content in a nested wrapper
+			wrapper = wrapper.lastElementChild;
+		}
+
+		paginationButton = $optional(`:scope > ${paginationButtonSelector}`, wrapper);
+
+		// Missing if we reached the end
+		paginationButton?.click();
+	}
+}
+
+async function handleAltClick({altKey, delegateTarget}) {
+	if (!altKey) {
+		return;
+	}
+
+	await showToast(expandHidden(delegateTarget), {
+		message: 'Expanding…',
+		doneMessage: 'Expanded',
+	});
+}
+
+function init(signal) {
+	delegate(paginationButtonSelector, 'click', handleAltClick, {signal});
+}
+
+void features.add(import.meta.url, {
+	include: [
+		isConversation,
+	],
+	init,
+});
+
+/*
+Test URLs
+https://github.com/rust-lang/rfcs/pull/2544
+*/

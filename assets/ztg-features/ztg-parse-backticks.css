@@ -1,0 +1,21 @@
+.rgh-parse-backticks {
+  background-color: var(--bgColor-neutral-muted, var(--color-neutral-muted, fuchsia));
+  border-radius: 6px;
+  margin: 0;
+  padding: .2em .4em;
+  font-size: 85%;
+}
+
+.rgh-parse-backticks:is(span[class^="LinkedPullRequests"] > *) {
+  font-size: 95%;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

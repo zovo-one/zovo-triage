@@ -1,0 +1,19 @@
+:is(:is(html:not([rgh-OFF-scrollable-areas]) .comment-body, html:not([rgh-OFF-scrollable-areas]) [data-testid="markdown-body"]) blockquote, :is(html:not([rgh-OFF-scrollable-areas]) .comment-body, html:not([rgh-OFF-scrollable-areas]) [data-testid="markdown-body"]) pre):not(.rgh-scrollable-expanded, blockquote *, pre *) {
+  max-height: 30.5em;
+  position: relative;
+  overflow-y: auto;
+}
+
+:is(html:not([rgh-OFF-scrollable-areas]) .comment-body, html:not([rgh-OFF-scrollable-areas]) [data-testid="markdown-body"]) blockquote {
+  padding-bottom: .2em;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

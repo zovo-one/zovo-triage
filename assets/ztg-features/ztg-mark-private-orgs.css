@@ -1,0 +1,25 @@
+.rgh-private-org {
+  position: relative;
+}
+
+.rgh-private-org svg {
+  pointer-events: none;
+  fill: #333;
+  stroke: #fff;
+  stroke-width: 4px;
+  paint-order: stroke;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  overflow: visible !important;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

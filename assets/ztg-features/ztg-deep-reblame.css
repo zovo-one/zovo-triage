@@ -1,0 +1,19 @@
+button.rgh-deep-reblame .octicon-versions {
+  color: var(--color-prettylights-syntax-entity, cyan);
+  opacity: .7;
+}
+
+.rgh-deep-reblame:hover .octicon-versions {
+  color: var(--color-scale-pink-7, cyan);
+  opacity: .7;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

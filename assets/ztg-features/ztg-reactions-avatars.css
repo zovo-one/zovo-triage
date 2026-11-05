@@ -1,0 +1,29 @@
+:root .rgh-reactions-avatar {
+  --size: 16px;
+  --inherited-gap: 0px;
+  margin-left: calc(var(--size) * .3);
+  margin-right: calc(var(--size) * -.5 - var(--inherited-gap));
+  height: var(--size);
+}
+
+:root .rgh-reactions-avatar:last-of-type {
+  margin-right: 0 !important;
+}
+
+[role="switch"] :is(:root .rgh-reactions-avatar) {
+  --inherited-gap: 4px;
+}
+
+[role="switch"] :is(:root .rgh-reactions-avatar):last-of-type {
+  margin-right: -3px !important;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

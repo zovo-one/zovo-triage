@@ -1,0 +1,69 @@
+:is(html:not([rgh-OFF-align-issue-labels]) div[class^="IssueRow-module__row"], html:not([rgh-OFF-align-issue-labels]) div[class^="PullRequestRow-module__row"], html:not([rgh-OFF-align-issue-labels]) li[class*="PullsListItem"]:not([class*="compact"])) div[class^="Title-module__container"] {
+  display: contents;
+}
+
+:is(html:not([rgh-OFF-align-issue-labels]) div[class^="IssueRow-module__row"], html:not([rgh-OFF-align-issue-labels]) div[class^="PullRequestRow-module__row"], html:not([rgh-OFF-align-issue-labels]) li[class*="PullsListItem"]:not([class*="compact"])) div[class^="Title-module__container"] > [class*="heading"] {
+  grid-area: primary;
+  padding-top: 8px;
+}
+
+:is(html:not([rgh-OFF-align-issue-labels]) div[class^="IssueRow-module__row"], html:not([rgh-OFF-align-issue-labels]) div[class^="PullRequestRow-module__row"], html:not([rgh-OFF-align-issue-labels]) li[class*="PullsListItem"]:not([class*="compact"])) div[class^="Title-module__container"] > span[class*="trailingBadgesSpacer"] {
+  display: none;
+}
+
+:is(html:not([rgh-OFF-align-issue-labels]) div[class^="IssueRow-module__row"], html:not([rgh-OFF-align-issue-labels]) div[class^="PullRequestRow-module__row"], html:not([rgh-OFF-align-issue-labels]) li[class*="PullsListItem"]:not([class*="compact"])) div[class^="Title-module__container"] > span[class*="trailingBadgesContainer"] {
+  grid-area: -1 / main-content;
+  padding-bottom: 10px;
+}
+
+:is(html:not([rgh-OFF-align-issue-labels]) div[class^="IssueRow-module__row"], html:not([rgh-OFF-align-issue-labels]) div[class^="PullRequestRow-module__row"], html:not([rgh-OFF-align-issue-labels]) li[class*="PullsListItem"]:not([class*="compact"])) div[class^="Title-module__container"] > span[class*="trailingBadgesContainer"]:empty {
+  padding-bottom: 6px;
+}
+
+:is(html:not([rgh-OFF-align-issue-labels]) div[class^="IssueRow-module__row"], html:not([rgh-OFF-align-issue-labels]) div[class^="PullRequestRow-module__row"], html:not([rgh-OFF-align-issue-labels]) li[class*="PullsListItem"]:not([class*="compact"])) div[class^="Title-module__container"] > span[class*="trailingBadgesContainer"]:is(li[class*="PullsListItem"] *) {
+  margin-top: -4px;
+}
+
+:is(html:not([rgh-OFF-align-issue-labels]) div[class^="IssueRow-module__row"], html:not([rgh-OFF-align-issue-labels]) div[class^="PullRequestRow-module__row"], html:not([rgh-OFF-align-issue-labels]) li[class*="PullsListItem"]:not([class*="compact"])) div[class^="MetadataContainer-module__container"]:is(li[class*="PullsListItem"] *) {
+  padding-top: 8px;
+}
+
+:is(html:not([rgh-OFF-align-issue-labels]) div[class^="IssueRow-module__row"], html:not([rgh-OFF-align-issue-labels]) div[class^="PullRequestRow-module__row"], html:not([rgh-OFF-align-issue-labels]) li[class*="PullsListItem"]:not([class*="compact"])) div[class^="MainContent-module__inner"] {
+  padding-bottom: 0;
+}
+
+html:not([rgh-OFF-align-issue-labels]) .js-issue-row .min-width-0 {
+  flex-wrap: wrap;
+  display: flex;
+}
+
+html:not([rgh-OFF-align-issue-labels]) .js-issue-row .min-width-0 > .lh-default {
+  order: 1;
+}
+
+html:not([rgh-OFF-align-issue-labels]) .js-issue-row .commit-build-statuses {
+  margin-left: 4px;
+}
+
+html:not([rgh-OFF-align-issue-labels]) .js-issue-row .mt-1.text-small.color-fg-muted {
+  flex-basis: 100%;
+}
+
+html:not([rgh-OFF-align-issue-labels]) .js-issue-row .h4 {
+  max-width: 100%;
+}
+
+html:not([rgh-OFF-align-issue-labels]) .js-issue-row .IssueLabel {
+  margin-top: 4px;
+  font-size: 11px !important;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

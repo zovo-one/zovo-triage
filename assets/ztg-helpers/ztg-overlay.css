@@ -1,0 +1,19 @@
+.rgh-overlay {
+  color: #fff;
+  pointer-events: none;
+  background: #1a1a1a;
+  border: 1px solid #ffffff1f;
+  border-radius: 8px;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  padding: 6px 12px;
+  font-family: system-ui, sans-serif;
+  font-size: 14px;
+  display: flex;
+  position: fixed;
+  inset: 0;
+  box-shadow: 0 2px 8px #00000080;
+}

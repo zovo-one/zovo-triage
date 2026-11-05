@@ -1,0 +1,85 @@
+html:not([rgh-OFF-notifications-ui]) .js-check-all-container .js-bulk-action-toasts ~ div .Box-header {
+  white-space: nowrap;
+  overflow: auto;
+}
+
+html:not([rgh-OFF-notifications-ui]) {
+  --gap: 8px;
+}
+
+@media screen and (width < 768px) {
+  html:not([rgh-OFF-notifications-ui]) .js-notifications-container > h1.sr-only + .d-md-none {
+    gap: var(--gap);
+    flex-wrap: wrap;
+    display: flex !important;
+  }
+
+  html:not([rgh-OFF-notifications-ui]) .manage-notifications-responsive.my-2 {
+    order: 10;
+    margin: 0 !important;
+  }
+}
+
+@media screen and (width < 1012px) {
+  html:not([rgh-OFF-notifications-ui]) .manage-notifications-responsive + .d-flex {
+    flex-grow: 1;
+  }
+
+  html:not([rgh-OFF-notifications-ui]) .notification-recent-alerts:not(:has(a)) {
+    display: none !important;
+  }
+
+  html:not([rgh-OFF-notifications-ui]) .js-check-all-container > .flex-lg-row {
+    column-gap: var(--gap);
+    flex-wrap: wrap;
+    flex-direction: row !important;
+  }
+
+  html:not([rgh-OFF-notifications-ui]) [aria-label="Customize filters"] {
+    margin: 0 !important;
+  }
+
+  html:not([rgh-OFF-notifications-ui]) .notification-sort-by {
+    order: 3;
+    margin-left: auto;
+  }
+
+  html:not([rgh-OFF-notifications-ui]) .notification-group-by {
+    order: 6;
+  }
+
+  html:not([rgh-OFF-notifications-ui]) .notifications-query-builder-wrapper:not(:first-child) {
+    order: 9;
+  }
+
+  html:not([rgh-OFF-notifications-ui]) .notifications-query-builder-wrapper:first-child {
+    flex-grow: 1;
+    width: auto !important;
+  }
+}
+
+@media screen and (width < 544px) {
+  html:not([rgh-OFF-notifications-ui]) .js-notifications-mark-selected-actions .btn-sm {
+    padding-inline: .6em !important;
+  }
+
+  form :is(html:not([rgh-OFF-notifications-ui]) .js-notifications-mark-selected-actions .btn-sm) .mr-1 {
+    margin: 0 !important;
+  }
+}
+
+@media (768px <= width < 1012px) {
+  :is(html:not([rgh-OFF-notifications-ui]) .notification-sort-by, html:not([rgh-OFF-notifications-ui]) .notification-group-by):has( ~ .notification-recent-alerts a) {
+    display: none !important;
+  }
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

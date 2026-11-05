@@ -1,0 +1,19 @@
+.rgh-fit-textareas {
+  field-sizing: content;
+  min-height: 4.5lh;
+  max-height: none !important;
+}
+
+:root textarea.rgh-fit-textareas.form-control {
+  height: auto;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

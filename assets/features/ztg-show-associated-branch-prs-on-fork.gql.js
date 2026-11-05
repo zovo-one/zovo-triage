@@ -1,0 +1,3 @@
+var AssociatedPullRequests = "query AssociatedPullRequests($owner: String!, $name: String!) {\n\trepository(owner: $owner, name: $name) {\n\t\trefs(refPrefix: \"refs/heads/\", last: 100) {\n\t\t\tnodes {\n\t\t\t\tname\n\t\t\t\tassociatedPullRequests(\n\t\t\t\t\tlast: 1\n\t\t\t\t\torderBy: { field: CREATED_AT, direction: DESC }\n\t\t\t\t) {\n\t\t\t\t\tnodes {\n\t\t\t\t\t\tnumber\n\t\t\t\t\t\tstate\n\t\t\t\t\t\tisDraft\n\t\t\t\t\t\turl\n\t\t\t\t\t\ttimelineItems(\n\t\t\t\t\t\t\tlast: 1\n\t\t\t\t\t\t\titemTypes: [HEAD_REF_DELETED_EVENT, HEAD_REF_RESTORED_EVENT]\n\t\t\t\t\t\t) {\n\t\t\t\t\t\t\tnodes {\n\t\t\t\t\t\t\t\t__typename\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n";
+
+export { AssociatedPullRequests as default };

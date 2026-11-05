@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json.schemastore.org/chrome-manifest",
+  "name": "__MSG_extName__",
+  "version": "1.0.1",
+  "description": "__MSG_extDesc__",
+  "homepage_url": "https://zovo.one",
+  "manifest_version": 3,
+  "minimum_chrome_version": "123",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "zovo-triage@zovo.one",
+      "strict_min_version": "128.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    },
+    "gecko_android": {
+      "strict_min_version": "128.0"
+    }
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting",
+    "contextMenus",
+    "activeTab",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://github.com/*",
+    "https://api.github.com/*",
+    "https://zgubxqomnbmxgbdhvwja.supabase.co/functions/v1/verify-extension-license"
+  ],
+  "action": {
+    "default_title": "Open Zovo Triage",
+    "default_popup": "assets/triage-panel.html",
+    "default_icon": {
+      "16": "assets/triage-icon-16.png",
+      "32": "assets/triage-icon-32.png"
+    }
+  },
+  "icons": {
+    "16": "assets/triage-icon-16.png",
+    "32": "assets/triage-icon-32.png",
+    "48": "assets/triage-icon-48.png",
+    "128": "assets/triage-icon-128.png"
+  },
+  "options_page": "assets/options.html",
+  "background": {
+    "service_worker": "assets/zovo-sw.mjs",
+    "type": "module",
+    "scripts": [
+      "assets/ztg-background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": [
+        "https://github.com/*",
+        "https://gist.github.com/*"
+      ],
+      "exclude_matches": [
+        "https://*/login/*"
+      ],
+      "css": [
+        "assets/ztg-ztg-refined-github.css"
+      ],
+      "js": [
+        "assets/ztg-content-script.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*"
+      ],
+      "matches": [
+        "https://*/*"
+      ]
+    }
+  ],
+  "default_locale": "en"
+}

@@ -1,0 +1,123 @@
+import { clsx } from '../npm/ztg-clsx-clsx.js';
+import React from '../npm/ztg-dom-chef.js';
+import { isReleasesOrTags, isSingleReleaseOrTag } from '../npm/ztg-github-url-detection.js';
+import { d as distExports } from '../_virtual/ztg-index.js';
+import DownloadIcon from '../npm/ztg-octicons-plain-react-components-Download.js';
+import { closestElementOptional, closestElement, $, $$, $optional } from '../npm/ztg-select-dom.js';
+import features from '../ztg-feature-manager.js';
+import api from '../github-helpers/ztg-api.js';
+import { assertNodeContent, getClasses } from '../helpers/ztg-dom-utils.js';
+import { createHeatIndexFunction } from '../helpers/ztg-math.js';
+import observe from '../helpers/ztg-selector-observer.js';
+import getReleaseDownloadCount from './ztg-release-download-count.gql.js';
+
+/*
+
+This feature is documented at https://github.com/refined-github/refined-github/wiki/Customization
+
+*/
+
+
+
+
+
+
+
+async function getAssetsForTag(tag) {
+	const {repository} = await api.v4(getReleaseDownloadCount, {variables: {tag}});
+	const assets = repository.release.releaseAssets.nodes;
+	return Object.fromEntries(assets.map(({name, downloadCount}) => [name, downloadCount]));
+}
+
+async function addCounts(assetsList) {
+	// Both pages have .Box but in the list .Box doesn't include the tag
+	const container = closestElementOptional('section', assetsList) // Single-release page
+		?? closestElement('.Box:not(.Box--condensed)', assetsList); // Releases list, excludes the assets list’s own .Box
+
+	// .octicon-code required by visit-tag feature
+	const releaseName = $(['.octicon-tag ~ span', '.octicon-code ~ span'], container)
+		.textContent
+		.trim();
+
+	const assets = await getAssetsForTag(releaseName);
+
+	const calculateHeatIndex = createHeatIndexFunction(Object.values(assets));
+	for (const assetLink of $$('.octicon-package ~ a', assetsList)) {
+		// Match the asset in the DOM to the asset in the API response
+		const downloadCount = assets[assetLink.pathname.split('/').pop()] ?? 0;
+
+		// Avoid overflow/overlap
+		const row = closestElement('.Box-row', assetLink);
+		row.classList.add('flex-wrap');
+
+		// Re-align the asset size
+		const assetSize = $(
+			':scope > .flex-justify-end > span:has(+ span relative-time)',
+			row,
+		);
+		assertNodeContent(assetSize.firstChild, /^\d+(?:\.\d+)? \w{2,5}$/);
+
+		assetSize.classList.replace('text-sm-left', 'text-md-right');
+
+		const classes = getClasses(assetSize);
+		if (downloadCount === 0) {
+			// Don't show, but preserve space/column
+			classes.add('v-hidden');
+		}
+
+		// Add class to parent in order to define "columns"
+		assetSize.parentElement.classList.add('rgh-release-download-count', 'gap-4');
+
+		const widget = (
+			React.createElement('span', { className: clsx(getClasses(assetSize)),}
+, React.createElement('span', {
+					className: "d-inline-block text-right" ,
+					title: `${downloadCount} downloads`,
+					'data-rgh-heat': calculateHeatIndex(downloadCount),}
+
+, distExports.abbreviateNumber(downloadCount), " " , React.createElement(DownloadIcon, null )
+)
+)
+		);
+
+		const nativeCount = $optional('span[aria-label*="download"]', assetSize.parentElement);
+		// The native counter doesn't have heat colors, so we replace it anyway.
+		// https://github.com/refined-github/refined-github/issues/9769#issuecomment-4857658434
+		if (nativeCount) {
+			nativeCount.replaceWith(widget);
+		} else {
+			// Add at the beginning of the line to avoid content shift
+			assetSize.parentElement.prepend(widget);
+		}
+
+		// Unset all margin we added `gap` like sane people.
+		// Unset via JS because we can't override utility classes.
+		for (const column of assetSize.parentElement.children) {
+			(column ).style.setProperty('margin', '0', 'important');
+		}
+	}
+}
+
+async function init(signal) {
+	observe('.Box-footer .Box--condensed:has(.octicon-package)', addCounts, {signal});
+}
+
+void features.add(import.meta.url, {
+	include: [
+		isReleasesOrTags,
+		isSingleReleaseOrTag,
+	],
+	requiresToken: true,
+	init,
+});
+
+/*
+
+Test URLs
+
+- One release: https://github.com/refined-github/sandbox/releases/tag/v1.0.0
+- List of releases: https://github.com/cli/cli/releases
+- Lots of assets: https://github.com/notepad-plus-plus/notepad-plus-plus/releases
+- Assets without hashes: https://github.com/NateShoffner/Disable-Nvidia-Telemetry/releases/tag/1.1
+
+*/

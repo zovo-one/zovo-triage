@@ -1,0 +1,27 @@
+.rgh-low-quality-comments-note {
+  color: var(--fgColor-muted, var(--color-fg-muted, fuchsia));
+  margin: 15px 0 10px 60px;
+  font-size: 12px;
+}
+
+.rgh-hidden-comment .timeline-comment {
+  border-color: var(--rgh-red, fuchsia);
+}
+
+.rgh-hidden-comment .timeline-comment--caret:before {
+  background-color: var(--rgh-red, fuchsia);
+}
+
+.rgh-hidden-comment .timeline-comment--caret:after {
+  left: -7px;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}

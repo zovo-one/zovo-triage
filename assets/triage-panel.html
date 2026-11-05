@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="color-scheme" content="light dark">
+	<title>Zovo Triage</title>
+	<link rel="stylesheet" href="triage-panel.css">
+	<script src="triage-panel.js" defer></script>
+</head>
+<body>
+	<header class="ztg-panel-head">
+		<div class="ztg-brand-lockup">
+			<img src="triage-icon-32.png" width="32" height="32" alt="">
+			<div><strong>Zovo Triage</strong><span>Maintainer cockpit</span></div>
+		</div>
+		<div class="ztg-head-actions">
+			<span id="ztg-plan-badge" class="ztg-badge">FREE</span>
+			<button id="ztg-settings" class="ztg-icon-button" type="button" aria-label="Open settings" title="Settings">⚙</button>
+		</div>
+	</header>
+
+	<main>
+		<section class="ztg-hero" aria-labelledby="ztg-hero-title">
+			<p class="ztg-kicker">QUEUE READY</p>
+			<div id="ztg-queue-count" class="ztg-hero-number" role="status" aria-live="polite">0</div>
+			<h1 id="ztg-hero-title">notifications in view</h1>
+			<p id="ztg-sync-state">Connect your notifications tab to begin.</p>
+			<div class="ztg-hero-actions">
+				<button id="ztg-open-inbox" class="ztg-primary" type="button">Open inbox</button>
+				<button id="ztg-refresh" class="ztg-secondary" type="button">Refresh</button>
+			</div>
+		</section>
+
+		<section class="ztg-section" aria-labelledby="ztg-filter-title">
+			<div class="ztg-section-head">
+				<h2 id="ztg-filter-title">TRIAGE FILTERS</h2>
+				<span id="ztg-visible-count">0 shown</span>
+			</div>
+			<div class="ztg-filter-grid">
+				<label>Repository<select id="ztg-repository-filter"><option value="">All repositories</option></select></label>
+				<label>Reason<select id="ztg-reason-filter"><option value="">All reasons</option></select></label>
+			</div>
+		</section>
+
+		<section class="ztg-section ztg-queue-section" aria-labelledby="ztg-inbox-title">
+			<div class="ztg-section-head">
+				<h2 id="ztg-inbox-title">INBOX BOARD</h2>
+				<span>done · snooze</span>
+			</div>
+			<div id="ztg-inbox-list" class="ztg-inbox-list"></div>
+			<div id="ztg-empty" class="ztg-empty">
+				<div class="ztg-empty-art" aria-hidden="true"><span></span><span></span><i>✓</i></div>
+				<strong>Clear view, calm queue</strong>
+				<p>Open the notifications page, then refresh this board.</p>
+			</div>
+		</section>
+
+		<section class="ztg-section" aria-labelledby="ztg-search-title">
+			<div class="ztg-section-head"><h2 id="ztg-search-title">PINNED SEARCHES</h2><span>keys 1–5</span></div>
+			<div id="ztg-pinned-searches" class="ztg-pinned-searches"><span class="ztg-muted">Pin filters from an issue list.</span></div>
+		</section>
+	</main>
+
+	<footer>
+		<a class="ztg-supporter" href="https://zovo.one/pricing?utm_source=extension&utm_medium=popup&utm_campaign=triage-v2" target="_blank" rel="noreferrer">Supporter · add 30-day snooze</a>
+		<details class="ztg-licence">
+			<summary>Activate licence</summary>
+			<form id="ztg-license-form">
+				<label for="ztg-license-key">Licence key</label>
+				<div><input id="ztg-license-key" autocomplete="off" spellcheck="false" placeholder="ZOVO-XXXX-XXXX-XXXX-XXXX" required><button type="submit">Verify</button></div>
+				<p id="ztg-license-status" role="status" aria-live="polite"></p>
+			</form>
+		</details>
+		<a class="ztg-site-link" href="https://zovo.one" target="_blank" rel="noreferrer">zovo.one</a>
+	</footer>
+</body>
+</html>

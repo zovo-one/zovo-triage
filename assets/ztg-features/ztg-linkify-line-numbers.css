@@ -1,0 +1,14 @@
+html:not([rgh-OFF-linkify-line-numbers]) .blob-num:not(.blob-num-hunk, .empty-cell):hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#rgh-bisect-dialog {
+  min-width: 380px;
+  box-shadow: var(--shadow-floating-large, var(--color-shadow-large, var(--color-toast-shadow)));
+  z-index: 2147483647;
+  position: fixed;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}
